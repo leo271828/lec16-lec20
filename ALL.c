@@ -194,4 +194,24 @@ int main(){
 }
 
   // Bingo
-  
+
+int bingo (uint16_t num[]) {
+    int sum = 0, vertical = 255, diag1 = 1, diag2 = 128;
+    for(int i=0;i<8;i++){
+        int tmp = (int)num[i] & 255 ;
+        if(tmp == 255) sum++;
+
+        vertical &= tmp;
+
+        if( tmp & diag1 )
+            diag1 = diag1 << 1;
+        if( tmp & diag2 )
+            diag2 = diag2 >> 1;
+    }
+    for(int i=0;i<8;i++)
+        if((vertical >> i) & 1) sum++;
+    if( diag1 == 256 ) sum++;
+    if( diag2 == 0 ) sum++;
+    
+    return sum;
+}
